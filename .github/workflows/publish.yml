@@ -1,8 +1,8 @@
 name: "Publish GitHub Action"
 on:
   push:
-    branches:    
-      - master
+    tags:    
+      - "v*"
   workflow_dispatch:
 
 jobs:
