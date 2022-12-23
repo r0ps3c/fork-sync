@@ -1,6 +1,6 @@
 {
   "name": "fork-sync",
-  "version": "1.6.3",
+  "version": "2.0.0",
   "private": true,
   "description": "Keep your fork up to date",
   "main": "lib/main.js",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tgymnich/fork-sync.git"
+    "url": "git+https://github.com/r0ps3c/fork-sync.git"
   },
   "keywords": [
     "actions",
@@ -20,16 +20,16 @@
     "automation",
     "sync"
   ],
-  "author": "tgymnich",
+  "author": "r0ps3c",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.6.0",
+    "@actions/core": "^1.10.0",
     "@actions/github": "^4.0.0",
     "@octokit/plugin-retry": "^3.0.9",
-    "@octokit/rest": "^18.5.3"
+    "@octokit/rest": "^18.12.0"
   },
   "devDependencies": {
-    "@types/node": "^15.0.1",
-    "typescript": "^4.4.4"
+    "@types/node": "^15.14.9",
+    "typescript": "^4.9.4"
   }
 }
