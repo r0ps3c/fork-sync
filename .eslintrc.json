@@ -1,0 +1,28 @@
+{
+    "plugins": ["@typescript-eslint"],
+    "extends": ["plugin:github/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": 9,
+      "sourceType": "module",
+      "project": "./tsconfig.json"
+    },
+    "rules": {
+      "@typescript-eslint/no-unsafe-call": "off",
+      "@typescript-eslint/no-unsafe-member-access": "off",
+      "@typescript-eslint/restrict-template-expressions": [
+        "error",
+        {"allowAny": true}
+      ],
+      "import/no-namespace": "off",
+      "camelcase": "off",
+      "i18n-text/no-en": "off"
+    },
+    "env": {
+      "node": true,
+      "es6": true
+    }
+  }
