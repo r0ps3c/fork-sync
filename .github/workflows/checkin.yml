@@ -7,7 +7,10 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: "npm run all"
+    - name: "update modules"
+      run: npm i
+
+    - name: "build"
       run: npm run all
 
     - name: "check for uncommitted changes"
