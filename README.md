@@ -1,6 +1,6 @@
 # Fork Sync
-[![Build](https://github.com/tg908/fork-sync/workflows/PR%20Checks/badge.svg)](https://github.com/tg908/fork-sync/actions?workflow=PR%20Checks)
-![Version](https://img.shields.io/github/v/release/tg908/fork-sync?style=flat-square)
+[![Build](https://github.com/r0ps3c/fork-sync/workflows/PR%20Checks/badge.svg)](https://github.com/r0ps3c/fork-sync/actions?workflow=PR%20Checks)
+![Version](https://img.shields.io/github/v/release/r0ps3c/fork-sync?style=flat-square)
 
 Github action to sync your Forks.
 This action uses octokit and the GitHub API to automatically create and merge a pull request with the head defined by `head` into the base defined by `base`. The head branch owner is defined by `owner`. If you create a PR in the same repository you can omit the `owner` parameter.
