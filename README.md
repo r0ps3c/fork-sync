@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: tgymnich/fork-sync@v1.6.3
+      - uses: r0ps3c/fork-sync@v2
         with:
           owner: llvm
           base: master
@@ -52,7 +52,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: tgymnich/fork-sync@v1.6.3
+      - uses: r0ps3c/fork-sync@v2
         with:
           token: ${{ secrets.PERSONAL_TOKEN }}
           owner: llvm
