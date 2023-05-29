@@ -62,8 +62,8 @@ function run() {
         const autoMerge = (yield core).getBooleanInput('auto_merge', {
             required: false
         });
-        const retries = (_a = parseInt((yield core).getInput('retries', { required: false }))) !== null && _a !== void 0 ? _a : 4;
-        const retryAfter = (_b = parseInt((yield core).getInput('retry_after', { required: false }))) !== null && _b !== void 0 ? _b : 60;
+        const retries = (_a = parseInt((yield core).getInput('retries', { required: false }))) !== null && _a !== void 0 ? _a : 3;
+        const retryAfter = (_b = parseInt((yield core).getInput('retry_after', { required: false }))) !== null && _b !== void 0 ? _b : 30;
         const token = (yield core).getInput('token', { required: true });
         const MyOctokit = (yield Octokit).Octokit.plugin((yield retry).retry);
         const octokit = new MyOctokit({
