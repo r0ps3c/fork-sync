@@ -88,7 +88,13 @@ async function run() {
   } catch (error: any) {
     if (error?.request?.request?.retryCount)
       (await core).info(
-        `request failed after ${error.request.request.retryCount} retries with a delay of ${error.request.request.retryAfter}`
+        `request failed after ${
+          error.request.request.retryCount
+        } retries with a delay of ${
+          error.request.request.retryAfter
+        }, with error ${
+          (error?.errors ?? error?.response?.data?.errors)?.[0].message
+        }`
       )
     else if (
       (error?.errors ??
