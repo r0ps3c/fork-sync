@@ -68,7 +68,7 @@ function run() {
         const MyOctokit = (yield Octokit).Octokit.plugin((yield retry).retry);
         const octokit = new MyOctokit({
             auth: token,
-            request: { retries, retryAfter }
+            retry: { retries, retryAfter }
         });
         const r = octokit.repos.get({
             owner,
