@@ -62,13 +62,13 @@ function run() {
         const autoMerge = (yield core).getBooleanInput('auto_merge', {
             required: false
         });
-        const retries = (_a = parseInt((yield core).getInput('retries', { required: false }))) !== null && _a !== void 0 ? _a : 3;
-        const retryAfter = (_b = parseInt((yield core).getInput('retry_after', { required: false }))) !== null && _b !== void 0 ? _b : 30;
+        const numRetries = (_a = parseInt((yield core).getInput('retries', { required: false }))) !== null && _a !== void 0 ? _a : 3;
+        const retrySeconds = (_b = parseInt((yield core).getInput('retry_after', { required: false }))) !== null && _b !== void 0 ? _b : 30;
         const token = (yield core).getInput('token', { required: true });
         const MyOctokit = (yield Octokit).Octokit.plugin((yield retry).retry);
         const octokit = new MyOctokit({
             auth: token,
-            retry: { retries, retryAfter }
+            request: { retries: numRetries, retryAfter: retrySeconds }
         });
         const r = octokit.repos.get({
             owner,
@@ -79,6 +79,14 @@ function run() {
             repo = ((_g = (yield r).data.parent) === null || _g === void 0 ? void 0 : _g.name) || repo;
         }
         try {
+            const cmpres = yield octokit.repos.compareCommitsWithBasehead({
+                owner: (yield Github).context.repo.owner,
+                repo: (yield Github).context.repo.repo,
+                basehead: `${head}...${(yield Github).context.sha}`
+            });
+            if (cmpres.data.behind_by === 0) {
+                return;
+            }
             const pr = yield octokit.pulls.create({
                 owner: (yield Github).context.repo.owner,
                 repo: (yield Github).context.repo.repo,

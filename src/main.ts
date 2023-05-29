@@ -23,16 +23,16 @@ async function run() {
   const autoMerge = (await core).getBooleanInput('auto_merge', {
     required: false
   })
-  const retries =
+  const numRetries =
     parseInt((await core).getInput('retries', {required: false})) ?? 3
-  const retryAfter =
+  const retrySeconds =
     parseInt((await core).getInput('retry_after', {required: false})) ?? 30
   const token = (await core).getInput('token', {required: true})
 
   const MyOctokit = (await Octokit).Octokit.plugin((await retry).retry)
   const octokit = new MyOctokit({
     auth: token,
-    retry: {retries, retryAfter}
+    request: {retries: numRetries, retryAfter: retrySeconds}
   })
 
   const r = octokit.repos.get({
@@ -46,6 +46,16 @@ async function run() {
   }
 
   try {
+    const cmpres = await octokit.repos.compareCommitsWithBasehead({
+      owner: (await Github).context.repo.owner,
+      repo: (await Github).context.repo.repo,
+      basehead: `${head}...${(await Github).context.sha}`
+    })
+
+    if (cmpres.data.behind_by === 0) {
+      return
+    }
+
     const pr = await octokit.pulls.create({
       owner: (await Github).context.repo.owner,
       repo: (await Github).context.repo.repo,
