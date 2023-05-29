@@ -24,9 +24,9 @@ async function run() {
     required: false
   })
   const retries =
-    parseInt((await core).getInput('retries', {required: false})) ?? 4
+    parseInt((await core).getInput('retries', {required: false})) ?? 3
   const retryAfter =
-    parseInt((await core).getInput('retry_after', {required: false})) ?? 60
+    parseInt((await core).getInput('retry_after', {required: false})) ?? 30
   const token = (await core).getInput('token', {required: true})
 
   const MyOctokit = (await Octokit).Octokit.plugin((await retry).retry)
