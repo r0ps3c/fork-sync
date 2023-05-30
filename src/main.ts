@@ -46,13 +46,20 @@ async function run() {
   }
 
   try {
+    ;(await core).debug(
+      `about to compare ${(await Github).context.repo.owner}:${
+        (await Github).context.repo.repo
+      } with ${owner}:${head}`
+    )
+
     const cmpres = await octokit.repos.compareCommitsWithBasehead({
       owner: (await Github).context.repo.owner,
       repo: (await Github).context.repo.repo,
-      basehead: `${head}...${(await Github).context.sha}`
+      basehead: `${(await Github).context.repo.owner}:${(await Github).context.repo.repo}...${owner}:${head}`
     })
 
     if (cmpres.data.behind_by === 0) {
+      ;(await core).debug('Fork is up to date, exiting')
       return
     }
 

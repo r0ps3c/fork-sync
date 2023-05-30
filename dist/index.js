@@ -79,12 +79,16 @@ function run() {
             repo = ((_g = (yield r).data.parent) === null || _g === void 0 ? void 0 : _g.name) || repo;
         }
         try {
+            ;
+            (yield core).debug(`about to compare ${(yield Github).context.repo.owner}:${(yield Github).context.repo.repo} with ${owner}:${head}...${(yield Github).context.sha}`);
             const cmpres = yield octokit.repos.compareCommitsWithBasehead({
                 owner: (yield Github).context.repo.owner,
                 repo: (yield Github).context.repo.repo,
-                basehead: `${head}...${(yield Github).context.sha}`
+                basehead: `${owner}:${head}...${(yield Github).context.sha}`
             });
             if (cmpres.data.behind_by === 0) {
+                ;
+                (yield core).debug('Fork is up to date, exiting');
                 return;
             }
             const pr = yield octokit.pulls.create({
