@@ -80,20 +80,21 @@ function run() {
         }
         try {
             ;
-            (yield core).debug(`about to compare ${(yield Github).context.repo.owner}:${(yield Github).context.repo.repo} with ${owner}:${head}`);
+            (yield core).debug(`about to compare ${context.repo.repo}:${base}...${owner}:${head}`);
             const cmpres = yield octokit.repos.compareCommitsWithBasehead({
-                owner: (yield Github).context.repo.owner,
-                repo: (yield Github).context.repo.repo,
-                basehead: `${(yield Github).context.repo.owner}:${base}...${owner}:${head}`
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                basehead: `${context.repo.repo}:${base}...${owner}:${head}`
             });
+            (yield core).debug('compare returned ${JSON.stringify(cmpres.data)}');
             if (cmpres.data.behind_by === 0) {
                 ;
                 (yield core).debug('Fork is up to date, exiting');
                 return;
             }
             const pr = yield octokit.pulls.create({
-                owner: (yield Github).context.repo.owner,
-                repo: (yield Github).context.repo.repo,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
                 title: prTitle,
                 head: `${owner}:${head}`,
                 base,
