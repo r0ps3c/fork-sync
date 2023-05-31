@@ -55,7 +55,11 @@ async function run() {
     const cmpres = await octokit.repos.compareCommitsWithBasehead({
       owner: (await Github).context.repo.owner,
       repo: (await Github).context.repo.repo,
-      basehead: `${(await Github).context.repo.owner}:${(await Github).context.repo.repo}...${owner}:${head}`
+      basehead: `${
+        (
+          await Github
+        ).context.repo.owner
+      }:${base}...${owner}:${head}`
     })
 
     if (cmpres.data.behind_by === 0) {

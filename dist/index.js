@@ -80,11 +80,11 @@ function run() {
         }
         try {
             ;
-            (yield core).debug(`about to compare ${(yield Github).context.repo.owner}:${(yield Github).context.repo.repo} with ${owner}:${head}...${(yield Github).context.sha}`);
+            (yield core).debug(`about to compare ${(yield Github).context.repo.owner}:${(yield Github).context.repo.repo} with ${owner}:${head}`);
             const cmpres = yield octokit.repos.compareCommitsWithBasehead({
                 owner: (yield Github).context.repo.owner,
                 repo: (yield Github).context.repo.repo,
-                basehead: `${owner}:${head}...${(yield Github).context.sha}`
+                basehead: `${(yield Github).context.repo.owner}:${base}...${owner}:${head}`
             });
             if (cmpres.data.behind_by === 0) {
                 ;
