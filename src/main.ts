@@ -47,20 +47,16 @@ async function run() {
 
   try {
     ;(await core).debug(
-      `about to compare ${(await Github).context.repo.owner}:${
-        (await Github).context.repo.repo
-      } with ${owner}:${head}`
+      `about to compare ${context.repo.repo}:${base}...${owner}:${head}`
     )
 
     const cmpres = await octokit.repos.compareCommitsWithBasehead({
-      owner: (await Github).context.repo.owner,
-      repo: (await Github).context.repo.repo,
-      basehead: `${
-        (
-          await Github
-        ).context.repo.owner
-      }:${base}...${owner}:${head}`
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      basehead: `${context.repo.repo}:${base}...${owner}:${head}`
     })
+
+    ;(await core).debug('compare returned ${JSON.stringify(cmpres.data)}')
 
     if (cmpres.data.behind_by === 0) {
       ;(await core).debug('Fork is up to date, exiting')
@@ -68,8 +64,8 @@ async function run() {
     }
 
     const pr = await octokit.pulls.create({
-      owner: (await Github).context.repo.owner,
-      repo: (await Github).context.repo.repo,
+      owner: context.repo.owner,
+      repo: context.repo.repo,
       title: prTitle,
       head: `${owner}:${head}`,
       base,
