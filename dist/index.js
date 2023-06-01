@@ -86,7 +86,7 @@ function run() {
                 repo: context.repo.repo,
                 basehead: `${context.repo.repo}:${base}...${owner}:${head}`
             });
-            (yield core).debug(`compare returned ${JSON.stringify(cmpres)}`);
+            (yield core).debug(`compare returned ${String(cmpres)}`);
             if (cmpres.data.behind_by === 0) {
                 ;
                 (yield core).debug('Fork is up to date, exiting');
