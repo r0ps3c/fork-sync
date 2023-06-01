@@ -56,7 +56,7 @@ async function run() {
       basehead: `${context.repo.owner}:${head}...${owner}:${base}`
     })
 
-    ;(await core).debug(`compare returned: ${String(cmpres)}`)
+    ;(await core).info(`compare returned: ${JSON.stringify(cmpres)}`)
 
     if (cmpres.data.behind_by === 0) {
       ;(await core).info('Fork is up to date, exiting')
