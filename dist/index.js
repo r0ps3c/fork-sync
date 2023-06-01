@@ -86,9 +86,10 @@ function run() {
                 repo: context.repo.repo,
                 basehead: `${context.repo.owner}:${head}...${owner}:${base}`
             });
+            (yield core).debug(`compare returned: ${String(cmpres)}`);
             if (cmpres.data.behind_by === 0) {
                 ;
-                (yield core).debug('Fork is up to date, exiting');
+                (yield core).info('Fork is up to date, exiting');
                 return;
             }
             const pr = yield octokit.pulls.create({
