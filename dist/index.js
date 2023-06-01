@@ -80,11 +80,11 @@ function run() {
         }
         try {
             ;
-            (yield core).debug(`about to compare ${context.repo.repo}:${base}...${owner}:${head}`);
+            (yield core).debug(`about to compare ${context.repo.repo}:${head}...${owner}:${base}`);
             const cmpres = yield octokit.repos.compareCommitsWithBasehead({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                basehead: `${context.repo.repo}:${base}...${owner}:${head}`
+                basehead: `${context.repo.repo}:${head}...${owner}:${base}`
             });
             (yield core).info(`compare returned ${String(Object.entries(cmpres))}`);
             if (cmpres.data.behind_by === 0) {
