@@ -56,13 +56,14 @@ async function run() {
       basehead: `${context.repo.owner}:${head}...${owner}:${base}`
     })
 
-    ;(await core).info(`compare returned: ${JSON.stringify(cmpres)}`)
+    ;(await core).debug(`compare returned: ${JSON.stringify(cmpres)}`)
 
     if (cmpres.data.behind_by === 0) {
       ;(await core).info('Fork is up to date, exiting')
       return
     }
 
+    ;(await core).debug('creating PR')
     const pr = await octokit.pulls.create({
       owner: context.repo.owner,
       repo: context.repo.repo,
@@ -74,6 +75,7 @@ async function run() {
     })
 
     if (autoApprove) {
+      ;(await core).debug('auto approving')
       await octokit.pulls.createReview({
         owner: context.repo.owner,
         repo: context.repo.repo,
@@ -88,7 +90,9 @@ async function run() {
         event: 'APPROVE'
       })
     }
+
     if (autoMerge) {
+      ;(await core).debug('auto merging')
       await octokit.pulls.merge({
         owner: context.repo.owner,
         repo: context.repo.repo,

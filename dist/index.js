@@ -86,12 +86,14 @@ function run() {
                 repo: context.repo.repo,
                 basehead: `${context.repo.owner}:${head}...${owner}:${base}`
             });
-            (yield core).info(`compare returned: ${JSON.stringify(cmpres)}`);
+            (yield core).debug(`compare returned: ${JSON.stringify(cmpres)}`);
             if (cmpres.data.behind_by === 0) {
                 ;
                 (yield core).info('Fork is up to date, exiting');
                 return;
             }
+            ;
+            (yield core).debug('creating PR');
             const pr = yield octokit.pulls.create({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -102,6 +104,8 @@ function run() {
                 maintainer_can_modify: false
             });
             if (autoApprove) {
+                ;
+                (yield core).debug('auto approving');
                 yield octokit.pulls.createReview({
                     owner: context.repo.owner,
                     repo: context.repo.repo,
@@ -117,6 +121,8 @@ function run() {
                 });
             }
             if (autoMerge) {
+                ;
+                (yield core).debug('auto merging');
                 yield octokit.pulls.merge({
                     owner: context.repo.owner,
                     repo: context.repo.repo,
