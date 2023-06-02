@@ -53,7 +53,7 @@ async function run() {
     const cmpres = await octokit.repos.compareCommitsWithBasehead({
       owner: context.repo.owner,
       repo: context.repo.repo,
-      basehead: `${context.repo.owner}:${head}...${owner}:${base}`
+      basehead: `${owner}:${base}...${context.repo.owner}:${head}`
     })
 
     ;(await core).debug(`compare returned: ${JSON.stringify(cmpres)}`)
@@ -68,8 +68,8 @@ async function run() {
       owner: context.repo.owner,
       repo: context.repo.repo,
       title: prTitle,
-      head: `${owner}:${base}`,
-      base: head,
+      head: `${owner}:${head}`,
+      base,
       body: prMessage,
       maintainer_can_modify: false
     })
