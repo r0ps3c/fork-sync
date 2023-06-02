@@ -68,8 +68,8 @@ async function run() {
       owner: context.repo.owner,
       repo: context.repo.repo,
       title: prTitle,
-      head: `${owner}:${head}`,
-      base,
+      head: `${owner}:${base}`,
+      base: head,
       body: prMessage,
       maintainer_can_modify: false
     })
@@ -110,9 +110,7 @@ async function run() {
           error.request.request.retryCount
         } retries with a delay of ${
           error.request.request.retryAfter
-        }, with error ${
-          (error?.errors ?? error?.response?.data?.errors?.[0])?.message
-        }`
+        }, with error ${(error?.errors ?? error?.response?.data)?.message}`
       )
       if (error?.errors)
         (await core).info(`errors=${JSON.stringify(error.errors)}`)

@@ -43,7 +43,7 @@ const Github = Promise.resolve().then(() => __importStar(__nccwpck_require__(543
 const core = Promise.resolve().then(() => __importStar(__nccwpck_require__(2186)));
 const retry = Promise.resolve().then(() => __importStar(__nccwpck_require__(6298)));
 function run() {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7;
     return __awaiter(this, void 0, void 0, function* () {
         const context = (yield Github).context;
         let owner = (yield core).getInput('owner', { required: false }) || context.repo.owner;
@@ -98,8 +98,8 @@ function run() {
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 title: prTitle,
-                head: `${owner}:${head}`,
-                base,
+                head: `${owner}:${base}`,
+                base: head,
                 body: prMessage,
                 maintainer_can_modify: false
             });
@@ -137,16 +137,16 @@ function run() {
         catch (error) {
             if ((_j = (_h = error === null || error === void 0 ? void 0 : error.request) === null || _h === void 0 ? void 0 : _h.request) === null || _j === void 0 ? void 0 : _j.retryCount) {
                 ;
-                (yield core).info(`request failed after ${error.request.request.retryCount} retries with a delay of ${error.request.request.retryAfter}, with error ${(_p = ((_k = error === null || error === void 0 ? void 0 : error.errors) !== null && _k !== void 0 ? _k : (_o = (_m = (_l = error === null || error === void 0 ? void 0 : error.response) === null || _l === void 0 ? void 0 : _l.data) === null || _m === void 0 ? void 0 : _m.errors) === null || _o === void 0 ? void 0 : _o[0])) === null || _p === void 0 ? void 0 : _p.message}`);
+                (yield core).info(`request failed after ${error.request.request.retryCount} retries with a delay of ${error.request.request.retryAfter}, with error ${(_m = ((_k = error === null || error === void 0 ? void 0 : error.errors) !== null && _k !== void 0 ? _k : (_l = error === null || error === void 0 ? void 0 : error.response) === null || _l === void 0 ? void 0 : _l.data)) === null || _m === void 0 ? void 0 : _m.message}`);
                 if (error === null || error === void 0 ? void 0 : error.errors)
                     (yield core).info(`errors=${JSON.stringify(error.errors)}`);
-                if ((_r = (_q = error === null || error === void 0 ? void 0 : error.response) === null || _q === void 0 ? void 0 : _q.data) === null || _r === void 0 ? void 0 : _r.errors)
+                if ((_p = (_o = error === null || error === void 0 ? void 0 : error.response) === null || _o === void 0 ? void 0 : _o.data) === null || _p === void 0 ? void 0 : _p.errors)
                     (yield core).info(`response=${JSON.stringify(error.response)}`);
             }
-            else if ((_x = (_w = (_v = ((_s = error === null || error === void 0 ? void 0 : error.errors) !== null && _s !== void 0 ? _s : (_u = (_t = error === null || error === void 0 ? void 0 : error.response) === null || _t === void 0 ? void 0 : _t.data) === null || _u === void 0 ? void 0 : _u.errors)) === null || _v === void 0 ? void 0 : _v[0]) === null || _w === void 0 ? void 0 : _w.message) === null || _x === void 0 ? void 0 : _x.startsWith('No commits between'))
+            else if ((_v = (_u = (_t = ((_q = error === null || error === void 0 ? void 0 : error.errors) !== null && _q !== void 0 ? _q : (_s = (_r = error === null || error === void 0 ? void 0 : error.response) === null || _r === void 0 ? void 0 : _r.data) === null || _s === void 0 ? void 0 : _s.errors)) === null || _t === void 0 ? void 0 : _t[0]) === null || _u === void 0 ? void 0 : _u.message) === null || _v === void 0 ? void 0 : _v.startsWith('No commits between'))
                 (yield core).info(`No commits between ${context.repo.owner}:${base} and ${owner}:${head}`);
-            else if ((_3 = (_2 = (_1 = ((_y = error === null || error === void 0 ? void 0 : error.errors) !== null && _y !== void 0 ? _y : (_0 = (_z = error === null || error === void 0 ? void 0 : error.response) === null || _z === void 0 ? void 0 : _z.data) === null || _0 === void 0 ? void 0 : _0.errors)) === null || _1 === void 0 ? void 0 : _1[0]) === null || _2 === void 0 ? void 0 : _2.message) === null || _3 === void 0 ? void 0 : _3.startsWith('A pull request already exists for'))
-                (yield core).info(String((_9 = (_8 = (_7 = ((_4 = error === null || error === void 0 ? void 0 : error.errors) !== null && _4 !== void 0 ? _4 : (_6 = (_5 = error === null || error === void 0 ? void 0 : error.response) === null || _5 === void 0 ? void 0 : _5.data) === null || _6 === void 0 ? void 0 : _6.errors)) === null || _7 === void 0 ? void 0 : _7[0]) === null || _8 === void 0 ? void 0 : _8.message) !== null && _9 !== void 0 ? _9 : 'Unknown error creating merge/pull'));
+            else if ((_1 = (_0 = (_z = ((_w = error === null || error === void 0 ? void 0 : error.errors) !== null && _w !== void 0 ? _w : (_y = (_x = error === null || error === void 0 ? void 0 : error.response) === null || _x === void 0 ? void 0 : _x.data) === null || _y === void 0 ? void 0 : _y.errors)) === null || _z === void 0 ? void 0 : _z[0]) === null || _0 === void 0 ? void 0 : _0.message) === null || _1 === void 0 ? void 0 : _1.startsWith('A pull request already exists for'))
+                (yield core).info(String((_7 = (_6 = (_5 = ((_2 = error === null || error === void 0 ? void 0 : error.errors) !== null && _2 !== void 0 ? _2 : (_4 = (_3 = error === null || error === void 0 ? void 0 : error.response) === null || _3 === void 0 ? void 0 : _3.data) === null || _4 === void 0 ? void 0 : _4.errors)) === null || _5 === void 0 ? void 0 : _5[0]) === null || _6 === void 0 ? void 0 : _6.message) !== null && _7 !== void 0 ? _7 : 'Unknown error creating merge/pull'));
             else if (!ignoreFail)
                 (yield core).setFailed(`Failed to create or merge pull request: ${error !== null && error !== void 0 ? error : '[n/a]'}`);
         }
