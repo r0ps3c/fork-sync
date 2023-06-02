@@ -71,7 +71,7 @@ async function run() {
       body: prMessage,
       maintainer_can_modify: false
     })
-    ;(await core).info(`created PR #${pr.data.id}`)
+    ;(await core).info(`created PR #${pr.data.number}`)
 
     if (autoApprove) {
       ;(await core).debug('creating and auto approving review')
@@ -88,7 +88,7 @@ async function run() {
         pull_number: pr.data.number,
         event: 'APPROVE'
       })
-      ;(await core).info(`approved PR #${pr.data.id}`)
+      ;(await core).info(`approved PR #${pr.data.number}`)
     }
 
     if (autoMerge) {
@@ -101,7 +101,7 @@ async function run() {
         // @ts-ignore
         merge_method: mergeMethod
       })
-      ;(await core).info(`approved PR #${pr.data.id}`)
+      ;(await core).info(`approved PR #${pr.data.number}`)
     }
     //eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {

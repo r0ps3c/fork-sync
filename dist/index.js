@@ -102,7 +102,7 @@ function run() {
                 body: prMessage,
                 maintainer_can_modify: false
             });
-            (yield core).info(`created PR #${pr.data.id}`);
+            (yield core).info(`created PR #${pr.data.number}`);
             if (autoApprove) {
                 ;
                 (yield core).debug('creating and auto approving review');
@@ -119,7 +119,7 @@ function run() {
                     pull_number: pr.data.number,
                     event: 'APPROVE'
                 });
-                (yield core).info(`approved PR #${pr.data.id}`);
+                (yield core).info(`approved PR #${pr.data.number}`);
             }
             if (autoMerge) {
                 ;
@@ -132,7 +132,7 @@ function run() {
                     // @ts-ignore
                     merge_method: mergeMethod
                 });
-                (yield core).info(`approved PR #${pr.data.id}`);
+                (yield core).info(`approved PR #${pr.data.number}`);
             }
             //eslint-disable-next-line @typescript-eslint/no-explicit-any
         }
