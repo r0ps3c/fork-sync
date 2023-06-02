@@ -47,7 +47,7 @@ async function run() {
 
   try {
     ;(await core).debug(
-      `about to compare ${context.repo.owner}:${head}...${owner}:${base}`
+      `about to compare ${owner}:${base}...${context.repo.owner}:${head}`
     )
 
     const cmpres = await octokit.repos.compareCommitsWithBasehead({
@@ -55,8 +55,6 @@ async function run() {
       repo: context.repo.repo,
       basehead: `${owner}:${base}...${context.repo.owner}:${head}`
     })
-
-    ;(await core).debug(`compare returned: ${JSON.stringify(cmpres)}`)
 
     if (cmpres.data.behind_by === 0) {
       ;(await core).info('Fork is up to date, exiting')
@@ -75,7 +73,7 @@ async function run() {
     })
 
     if (autoApprove) {
-      ;(await core).debug('auto approving')
+      ;(await core).debug('creating and auto approving review')
       await octokit.pulls.createReview({
         owner: context.repo.owner,
         repo: context.repo.repo,
@@ -113,27 +111,25 @@ async function run() {
         }, with error ${(error?.errors ?? error?.response?.data)?.message}`
       )
       if (error?.errors)
-        (await core).info(`errors=${JSON.stringify(error.errors)}`)
+        (await core).debug(`errors=${JSON.stringify(error.errors)}`)
       if (error?.response?.data?.errors)
-        (await core).info(`response=${JSON.stringify(error.response)}`)
+        (await core).debug(`response=${JSON.stringify(error.response)}`)
     } else if (
-      (error?.errors ??
-        error?.response?.data?.errors)?.[0]?.message?.startsWith(
+      (error?.errors ?? error?.response?.data)?.message?.startsWith(
         'No commits between'
       )
     )
       (await core).info(
-        `No commits between ${context.repo.owner}:${base} and ${owner}:${head}`
+        `No commits between ${owner}:${base}...${context.repo.owner}:${head}`
       )
     else if (
-      (error?.errors ??
-        error?.response?.data?.errors)?.[0]?.message?.startsWith(
+      (error?.errors ?? error?.response?.data)?.message?.startsWith(
         'A pull request already exists for'
       )
     )
       (await core).info(
         String(
-          (error?.errors ?? error?.response?.data?.errors)?.[0]?.message ??
+          (error?.errors ?? error?.response?.data)?.message ??
             'Unknown error creating merge/pull'
         )
       )

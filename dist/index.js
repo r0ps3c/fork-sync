@@ -43,7 +43,7 @@ const Github = Promise.resolve().then(() => __importStar(__nccwpck_require__(543
 const core = Promise.resolve().then(() => __importStar(__nccwpck_require__(2186)));
 const retry = Promise.resolve().then(() => __importStar(__nccwpck_require__(6298)));
 function run() {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1;
     return __awaiter(this, void 0, void 0, function* () {
         const context = (yield Github).context;
         let owner = (yield core).getInput('owner', { required: false }) || context.repo.owner;
@@ -80,13 +80,12 @@ function run() {
         }
         try {
             ;
-            (yield core).debug(`about to compare ${context.repo.owner}:${head}...${owner}:${base}`);
+            (yield core).debug(`about to compare ${owner}:${base}...${context.repo.owner}:${head}`);
             const cmpres = yield octokit.repos.compareCommitsWithBasehead({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 basehead: `${owner}:${base}...${context.repo.owner}:${head}`
             });
-            (yield core).debug(`compare returned: ${JSON.stringify(cmpres)}`);
             if (cmpres.data.behind_by === 0) {
                 ;
                 (yield core).info('Fork is up to date, exiting');
@@ -105,7 +104,7 @@ function run() {
             });
             if (autoApprove) {
                 ;
-                (yield core).debug('auto approving');
+                (yield core).debug('creating and auto approving review');
                 yield octokit.pulls.createReview({
                     owner: context.repo.owner,
                     repo: context.repo.repo,
@@ -139,14 +138,14 @@ function run() {
                 ;
                 (yield core).info(`request failed after ${error.request.request.retryCount} retries with a delay of ${error.request.request.retryAfter}, with error ${(_m = ((_k = error === null || error === void 0 ? void 0 : error.errors) !== null && _k !== void 0 ? _k : (_l = error === null || error === void 0 ? void 0 : error.response) === null || _l === void 0 ? void 0 : _l.data)) === null || _m === void 0 ? void 0 : _m.message}`);
                 if (error === null || error === void 0 ? void 0 : error.errors)
-                    (yield core).info(`errors=${JSON.stringify(error.errors)}`);
+                    (yield core).debug(`errors=${JSON.stringify(error.errors)}`);
                 if ((_p = (_o = error === null || error === void 0 ? void 0 : error.response) === null || _o === void 0 ? void 0 : _o.data) === null || _p === void 0 ? void 0 : _p.errors)
-                    (yield core).info(`response=${JSON.stringify(error.response)}`);
+                    (yield core).debug(`response=${JSON.stringify(error.response)}`);
             }
-            else if ((_v = (_u = (_t = ((_q = error === null || error === void 0 ? void 0 : error.errors) !== null && _q !== void 0 ? _q : (_s = (_r = error === null || error === void 0 ? void 0 : error.response) === null || _r === void 0 ? void 0 : _r.data) === null || _s === void 0 ? void 0 : _s.errors)) === null || _t === void 0 ? void 0 : _t[0]) === null || _u === void 0 ? void 0 : _u.message) === null || _v === void 0 ? void 0 : _v.startsWith('No commits between'))
-                (yield core).info(`No commits between ${context.repo.owner}:${base} and ${owner}:${head}`);
-            else if ((_1 = (_0 = (_z = ((_w = error === null || error === void 0 ? void 0 : error.errors) !== null && _w !== void 0 ? _w : (_y = (_x = error === null || error === void 0 ? void 0 : error.response) === null || _x === void 0 ? void 0 : _x.data) === null || _y === void 0 ? void 0 : _y.errors)) === null || _z === void 0 ? void 0 : _z[0]) === null || _0 === void 0 ? void 0 : _0.message) === null || _1 === void 0 ? void 0 : _1.startsWith('A pull request already exists for'))
-                (yield core).info(String((_7 = (_6 = (_5 = ((_2 = error === null || error === void 0 ? void 0 : error.errors) !== null && _2 !== void 0 ? _2 : (_4 = (_3 = error === null || error === void 0 ? void 0 : error.response) === null || _3 === void 0 ? void 0 : _3.data) === null || _4 === void 0 ? void 0 : _4.errors)) === null || _5 === void 0 ? void 0 : _5[0]) === null || _6 === void 0 ? void 0 : _6.message) !== null && _7 !== void 0 ? _7 : 'Unknown error creating merge/pull'));
+            else if ((_t = (_s = ((_q = error === null || error === void 0 ? void 0 : error.errors) !== null && _q !== void 0 ? _q : (_r = error === null || error === void 0 ? void 0 : error.response) === null || _r === void 0 ? void 0 : _r.data)) === null || _s === void 0 ? void 0 : _s.message) === null || _t === void 0 ? void 0 : _t.startsWith('No commits between'))
+                (yield core).info(`No commits between ${owner}:${base}...${context.repo.owner}:${head}`);
+            else if ((_x = (_w = ((_u = error === null || error === void 0 ? void 0 : error.errors) !== null && _u !== void 0 ? _u : (_v = error === null || error === void 0 ? void 0 : error.response) === null || _v === void 0 ? void 0 : _v.data)) === null || _w === void 0 ? void 0 : _w.message) === null || _x === void 0 ? void 0 : _x.startsWith('A pull request already exists for'))
+                (yield core).info(String((_1 = (_0 = ((_y = error === null || error === void 0 ? void 0 : error.errors) !== null && _y !== void 0 ? _y : (_z = error === null || error === void 0 ? void 0 : error.response) === null || _z === void 0 ? void 0 : _z.data)) === null || _0 === void 0 ? void 0 : _0.message) !== null && _1 !== void 0 ? _1 : 'Unknown error creating merge/pull'));
             else if (!ignoreFail)
                 (yield core).setFailed(`Failed to create or merge pull request: ${error !== null && error !== void 0 ? error : '[n/a]'}`);
         }
