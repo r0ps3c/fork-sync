@@ -111,7 +111,7 @@ async function run() {
         } retries with a delay of ${
           error.request.request.retryAfter
         }, with error ${
-          (error?.errors ?? error?.response?.data?.errors)?.[0].message
+          (error?.errors ?? error?.response?.data?.errors?.[0])?.message
         }`
       )
     else if (
