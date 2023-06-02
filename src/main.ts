@@ -114,9 +114,10 @@ async function run() {
           (error?.errors ?? error?.response?.data?.errors?.[0])?.message
         }`
       )
-      if (error?.errors) (await core).info(JSON.stringify(error.errors))
+      if (error?.errors)
+        (await core).info(`errors=${JSON.stringify(error.errors)}`)
       if (error?.response?.data?.errors)
-        (await core).info(JSON.stringify(error.response))
+        (await core).info(`response=${JSON.stringify(error.response)}`)
     } else if (
       (error?.errors ??
         error?.response?.data?.errors)?.[0]?.message?.startsWith(

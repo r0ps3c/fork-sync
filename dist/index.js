@@ -139,9 +139,9 @@ function run() {
                 ;
                 (yield core).info(`request failed after ${error.request.request.retryCount} retries with a delay of ${error.request.request.retryAfter}, with error ${(_p = ((_k = error === null || error === void 0 ? void 0 : error.errors) !== null && _k !== void 0 ? _k : (_o = (_m = (_l = error === null || error === void 0 ? void 0 : error.response) === null || _l === void 0 ? void 0 : _l.data) === null || _m === void 0 ? void 0 : _m.errors) === null || _o === void 0 ? void 0 : _o[0])) === null || _p === void 0 ? void 0 : _p.message}`);
                 if (error === null || error === void 0 ? void 0 : error.errors)
-                    (yield core).info(JSON.stringify(error.errors));
+                    (yield core).info(`errors=${JSON.stringify(error.errors)}`);
                 if ((_r = (_q = error === null || error === void 0 ? void 0 : error.response) === null || _q === void 0 ? void 0 : _q.data) === null || _r === void 0 ? void 0 : _r.errors)
-                    (yield core).info(JSON.stringify(error.response));
+                    (yield core).info(`response=${JSON.stringify(error.response)}`);
             }
             else if ((_x = (_w = (_v = ((_s = error === null || error === void 0 ? void 0 : error.errors) !== null && _s !== void 0 ? _s : (_u = (_t = error === null || error === void 0 ? void 0 : error.response) === null || _t === void 0 ? void 0 : _t.data) === null || _u === void 0 ? void 0 : _u.errors)) === null || _v === void 0 ? void 0 : _v[0]) === null || _w === void 0 ? void 0 : _w.message) === null || _x === void 0 ? void 0 : _x.startsWith('No commits between'))
                 (yield core).info(`No commits between ${context.repo.owner}:${base} and ${owner}:${head}`);
