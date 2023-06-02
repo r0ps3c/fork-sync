@@ -104,8 +104,8 @@ async function run() {
     }
     //eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    if (error?.request?.request?.retryCount)
-      (await core).info(
+    if (error?.request?.request?.retryCount) {
+      ;(await core).info(
         `request failed after ${
           error.request.request.retryCount
         } retries with a delay of ${
@@ -114,7 +114,10 @@ async function run() {
           (error?.errors ?? error?.response?.data?.errors?.[0])?.message
         }`
       )
-    else if (
+      if (error?.errors) (await core).info(JSON.stringify(error.errors))
+      if (error?.response?.data?.errors)
+        (await core).info(JSON.stringify(error.response))
+    } else if (
       (error?.errors ??
         error?.response?.data?.errors)?.[0]?.message?.startsWith(
         'No commits between'
