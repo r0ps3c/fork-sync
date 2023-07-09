@@ -132,7 +132,8 @@ function run() {
                     // @ts-ignore
                     merge_method: mergeMethod
                 });
-                (yield core).info(`approved PR #${pr.data.number}`);
+                (yield core).info(`merged PR #${pr.data.number}`);
+                (yield core).setOutput('updated', true);
             }
             //eslint-disable-next-line @typescript-eslint/no-explicit-any
         }

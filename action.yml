@@ -51,6 +51,9 @@ inputs:
     description: 'Delay amount between retries'
     required: false
     default: 60
+outputs:
+  updated:
+    description: "Sync caused a repo update (PR/commit)"
 
 runs:
   using: 'node16'
