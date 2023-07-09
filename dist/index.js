@@ -133,7 +133,7 @@ function run() {
                     merge_method: mergeMethod
                 });
                 (yield core).info(`merged PR #${pr.data.number}`);
-                (yield core).setOutput('updated', true);
+                (yield core).setOutput('updated', 1);
             }
             //eslint-disable-next-line @typescript-eslint/no-explicit-any
         }

@@ -102,7 +102,7 @@ async function run() {
         merge_method: mergeMethod
       })
       ;(await core).info(`merged PR #${pr.data.number}`)
-      ;(await core).setOutput('updated', true)
+      ;(await core).setOutput('updated', 1)
     }
     //eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
