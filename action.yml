@@ -56,5 +56,5 @@ outputs:
     description: "ID of PR that was merged"
 
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'dist/index.js'
