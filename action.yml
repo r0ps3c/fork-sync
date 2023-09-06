@@ -52,8 +52,8 @@ inputs:
     required: false
     default: 60
 outputs:
-  updated:
-    description: "Sync caused a repo update (PR/commit)"
+  merged_pr_id:
+    description: "ID of PR that was merged"
 
 runs:
   using: 'node16'

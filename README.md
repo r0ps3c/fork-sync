@@ -60,7 +60,7 @@ jobs:
           head: master
 ```
 
-# Parameters
+# Input Parameters
 
 |  name           |   Optional  |   Default              |   description                                        |
 |---              |---          |---                     |---                                                   |
@@ -73,8 +73,14 @@ jobs:
 |   pr_message    | ✅          |                        |   Message of the created pull request                |
 |   ignore_fail   | ✅          |                        |   Ignore Exceptions                                  |
 
+# Outputs
+| name		| Description	|
+| merged_pr_id	| ID of merged PR |
+
+
+Notes:
 ⚠️ $current_repo_owner is your own username!
 
 ⚠️ Only provide the branch name for `head` and `base`. `user:branch` will not work! 
 
-⚠️ * if `auto_approve` is set to `true` you must provide a personal access token in `token` the default github token won't work! 
+⚠️ If `auto_approve` is set to `true` you must provide a personal access token in `token` the default github token won't work! 
